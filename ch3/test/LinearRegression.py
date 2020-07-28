@@ -56,7 +56,7 @@ class LinearRegression:
             while end < nums:
                 x_train = x[begin:end]
                 y_train = y[begin:end]
-                beign = end
+                begin = end
                 end = end + batch_size
                 feed_dict = {self.x:x_train, self.label:y_train}
                 cur_loss, = self.forward(feed_dict)

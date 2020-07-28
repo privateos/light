@@ -164,6 +164,12 @@ def tanh(x):
         raise TypeError('x is not light type')
     return Tanh(x)
 
+from .operations import Max
+def max(x, axis=None, keepdims=False):
+    if not is_light(x):
+        raise TypeError('x is not light type')
+    return Max(x, axis=axis, keepdims=keepdims)
+
 def executor(*objectives):
     for n in objectives:
         if not is_light(n):

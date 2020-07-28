@@ -39,6 +39,7 @@ class Constant(object):
         return self.output_value
 
 
+
 class Operation(object):
     pass
 
@@ -403,6 +404,33 @@ class Tanh(ArithmeticalOperation):
     def gradients_function(self):
         def grad_x(grad):
             return np.multiply(grad, np.subtract(1.0, np.square(self.output_value)))
+        return [grad_x]
+
+class Max(ArithmeticalOperation):
+    def __init__(self, x, axis=None, keepdims=False):
+        super(self.__class__, self).__init__(x)
+        self.axis = axis
+        self.keepdims = keepdims
+
+    def compute_output(self):
+        x, = self.input_nodes
+        self.output_value = np.max(x.output_value, axis=self.axis, keepdims=self.keepdims)
+        return self.output_value
+
+    def gradients_function(self):
+        def grad_x(grad):
+            x, = self.input_nodes
+            if self.keepdims:
+                return np.multiply(grad, np.equal(self.output_value, x.output_value))
+            else:
+                outshape = np.array(np.shape(x.output_value))
+                outshape[self.axis] = 1
+                t = np.shape(x.output_value)//outshape
+                r = np.reshape(self.output_value, outshape)
+                g = np.tile(r, t)
+                grad = np.reshape(grad, outshape)
+                eq = np.equal(g, x.output_value)
+                return np.multiply(grad, eq)
         return [grad_x]
 
 from queue import Queue
