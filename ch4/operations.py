@@ -696,3 +696,17 @@ class Reshape(ArithmeticalOperation):
             x, = self.input_nodes
             return np.reshape(grad, np.shape(x.output_value))
         return [grad_x]
+
+class Sigmoid(ArithmeticalOperation):
+    def __init__(self, x):
+        super(self.__class__, self).__init__(x)
+
+    def compute_output(self):
+        x, = self.input_nodes
+        self.output_value = np.divide(1.0, np.add(1.0, np.exp(np.negative(x.output_value))))
+        return self.output_value
+
+    def gradients_function(self):
+        def grad_x(grad):
+            return np.multiply(grad, np.multiply(self.output_value, np.subtract(1.0, self.output_value)))
+        return [grad_x]

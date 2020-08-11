@@ -205,3 +205,9 @@ def reshape(x, new_shape):
     if not is_light(x):
         raise TypeError('x is not light type')
     return Reshape(x, new_shape)
+
+from .operations import Sigmoid
+def sigmoid(x):
+    if not is_light(x):
+        raise TypeError('x is not light type')
+    return Sigmoid(x)
