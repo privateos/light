@@ -164,8 +164,8 @@ x = np.reshape(x, (x.shape[0], x.shape[1], x.shape[2]))
 x_train, x_test = x[0:60000], x[60000:]
 y_train, y_test = y[0:60000], y[60000:]
 
-model = GRU(lr=0.06)
-model.fit(x_train, y_train, epochs=20, batch_size=64)
+model = GRU(lr=0.01)
+model.fit(x_train, y_train, epochs=30, batch_size=64)
 
 pred = model.predict(x_test)
 pred = np.argmax(pred, axis=1)

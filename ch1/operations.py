@@ -101,6 +101,21 @@ class Add(ArithmeticalOperation):
         
         return [grad_x, grad_y]
 
+class Sin(ArithmeticalOperation):
+    def __init__(self, x):
+        super(self.__class__, self).__init__(x)
+    
+    def compute_output(self):
+        x, = self.input_nodes
+        self.output_value = np.sin(x.output_value)
+        return self.output_value
+
+    def gradients_function(self):
+        def grad_x(grad):
+            x, = self.input_nodes
+            return np.multiply(grad, np.cos(x.output_value))
+        return [grad_x]
+
 class Argmax(LogicalOperation):
     def __init__(self, x, axis=None):
         super(self.__class__, self).__init__(x)

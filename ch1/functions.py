@@ -70,6 +70,11 @@ def add(x, y):
     if not is_light(y):
         raise TypeError('y is not light type')
     return Add(x, y)
+from .operations import Sin
+def sin(x):
+    if not is_light(x):
+        raise TypeError('x is not light type')
+    return Sin(x)
 
 def argmax(x, axis=None):
     if not is_light(x):

@@ -31,3 +31,26 @@ for i in range(100):
     print("grad_x3")
     print(grad_x3)
     print("________________________")
+
+
+"""
+L = [x3, x2, y1, x1, y]
+feed_dict={x1:1, x2:2}
+for node in L:
+    if isinstance(node, Placeholder):
+        x1.output_value = feed_dict[node]
+    else:
+        node.compute_output()
+L[-1].output_value就是最终y的值
+"""
+"""
+executor(*[y])等同于Executor([y])
+"""
+"""
+x1 = light.functions.placeholder()
+x2 = light.functions.placeholder()
+x3 = light.functions.constant(1.0)
+y1 = light.functions.add(x2, x3)
+y = light.functions.add(x1, y2)
+forward = light.functions.executor(*[y1, y])
+"""
